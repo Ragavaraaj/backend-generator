@@ -1,6 +1,5 @@
 const fs = require("fs");
-const { exec } = require("child_process");
-const { spawn } = require("cross-spawn");
+const { execSync } = require("child_process");
 
 //Dependencies
 const inquirer = require("inquirer");
@@ -76,22 +75,30 @@ inquirer.prompt(QUESTIONS).then((answers) => {
 
   console.log(chalk.green("Have Successfully Created the Server"));
 
-  // npmDevStart(projectName);
+  npmDevStart(projectName);
 });
 
 function npmDevStart(newPath) {
   try {
-    spawn.sync("npm", ["install"], {
-      stdio: [process.stdin, process.stdout, process.stderr],
-      cwd: `${CURR_DIR}/${newPath}`,
-    });
+    const child = execSync(
+      `cd ${CURR_DIR}/${newPath} && npm install && npm run dev`,
+      {
+        stdio: "inherit",
+      }
+    );
 
-    spawn.sync("npm", ["run", "dev"], {
-      stdio: [process.stdin, process.stdout, process.stderr],
-      cwd: `${CURR_DIR}/${newPath}`,
-    });
+    const handleExit = () => {
+      console.log("inside exit");
+
+      child.kill("SIGTERM");
+      process.exit(1);
+    };
+
+    child.on("exit", handleExit);
+    child.on("SIGTERM", handleExit);
   } catch (err) {
     console.error(err);
+    process.exit(1);
   }
 }
 
