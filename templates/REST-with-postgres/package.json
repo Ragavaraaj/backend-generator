@@ -4,6 +4,7 @@
   "description": "REST endpoint",
   "main": "server.js",
   "dependencies": {
+    "cross-env": "^7.0.3",
     "dotenv": "^8.2.0",
     "fastify": "^3.14.1",
     "fastify-autoload": "^3.6.0",
@@ -15,8 +16,8 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js NODE_ENV=prod",
-    "dev": "nodemon server.js NODE_ENV=dev"
+    "start": "cross-env NODE_ENV=prod node server.js",
+    "dev": "cross-env NODE_ENV=dev nodemon server.js"
   },
   "author": "",
   "license": "ISC"

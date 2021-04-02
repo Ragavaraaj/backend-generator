@@ -1,5 +1,6 @@
 const fs = require("fs");
-const { spawn } = require("child_process");
+const { exec } = require("child_process");
+const { spawn } = require("cross-spawn");
 
 //Dependencies
 const inquirer = require("inquirer");
@@ -75,19 +76,19 @@ inquirer.prompt(QUESTIONS).then((answers) => {
 
   console.log(chalk.green("Have Successfully Created the Server"));
 
-  npmDevStart(projectName);
+  // npmDevStart(projectName);
 });
 
 function npmDevStart(newPath) {
   try {
-    const child = spawn("cd", [newPath]);
-    // use child.stdout.setEncoding('utf8'); if you want text chunks
-    child.stdout.on("data", (chunk) => {
-      console.log(chunk);
+    spawn.sync("npm", ["install"], {
+      stdio: [process.stdin, process.stdout, process.stderr],
+      cwd: `${CURR_DIR}/${newPath}`,
     });
 
-    child.on("close", (code) => {
-      console.log(`child process exited with code ${code}`);
+    spawn.sync("npm", ["run", "dev"], {
+      stdio: [process.stdin, process.stdout, process.stderr],
+      cwd: `${CURR_DIR}/${newPath}`,
     });
   } catch (err) {
     console.error(err);
