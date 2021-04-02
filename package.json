@@ -1,0 +1,19 @@
+{
+  "name": "backend-generator",
+  "version": "1.0.0",
+  "description": "this is used to generate backends with REST or GraphQL",
+  "main": "index.js",
+  "bin": {
+    "generate": "./index.js"
+  },
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^4.1.0",
+    "inquirer": "^8.0.0",
+    "replace-in-file": "^6.2.0"
+  }
+}
