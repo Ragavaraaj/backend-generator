@@ -25,7 +25,7 @@ const QUESTIONS = [
         if (!fileExists) {
           return true;
         } else {
-          return "Folder Aleady Exist !!!!";
+          return "Folder Aleady Exist!!!";
         }
       } else {
         return "Project name may only include letters, numbers, underscores and hashes.";
