@@ -9,7 +9,7 @@ const pool = new Pool({
   database: process.env.DB,
 });
 
-const executeQuery = async ({ query, arg }) => {
+const executeQuery = async (query, arg) => {
   const client = await pool.connect();
   try {
     const res = await client.query(query, arg);
